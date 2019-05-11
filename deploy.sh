@@ -1,4 +1,5 @@
-#!/usr/bin/env bash
+#!/bin/bash
+set -ev
 
 docker build -t mschregardus/multi-client:latest -t mschregardus/multi-client:$SHA -f ./client/Dockerfile ./client/
 docker build -t mschregardus/multi-server:latest -t mschregardus/multi-server:$SHA -f ./server/Dockerfile ./server/
