@@ -30,3 +30,6 @@
 .idea
 
 .DS_Store
+
+# The service account key file used by travis
+service-account.json
