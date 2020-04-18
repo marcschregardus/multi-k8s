@@ -26,7 +26,8 @@ spec:
               mountPath: /var/lib/postgresql/data
               subPath: postgres
           env:
-            - name: PGPASSWORD
+            # Note: Environment name changed from PGPASSWORD to POSTGRES_PASSWORD in docker image for postgres
+            - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pgpassword
