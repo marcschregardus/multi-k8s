@@ -72,6 +72,35 @@ Check secret has been created using:
 
 `kubectl get secrets`
 
+Repo used for the NGINX ingress:
+
+[https://github.com/kubernetes/ingress-nginx](https://github.com/kubernetes/ingress-nginx)
+
+Note: setup is different for different cloud vendors (i.e. Google Cloud Load Balancer)
+
+Ingress then needs to be enabled for minikube (see instructions below)
+
+[https://kubernetes.github.io/ingress-nginx/deploy/#minikube](https://kubernetes.github.io/ingress-nginx/deploy/#minikube)
+
+The commands required setup ingress are as follows:
+
+- `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/nginx-0.30.0/deploy/static/mandatory.yaml`
+- `minikube addons enable ingress`
+
+Note: if using docker for desktop, use the following commands instead:
+
+- `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/mandatory.yaml`
+- `kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/static/provider/cloud-generic.yaml`
+- `kubectl get svc -n ingress-nginx` - verify service has been created
+
+Minikube dashboard setup
+
+- `minikube dashboard`
+
+For docker for desktop setup, see the Udemy Courselecture notes
+
+[247. Docker Desktop's Kubernetes Dashboard](https://www.udemy.com/course/docker-and-kubernetes-the-complete-guide/learn/lecture/15492160#overview)
+
 ## Production Setup
 
 
@@ -84,8 +113,8 @@ need to have already been created. Uses the label selector system (i.e. `compone
 - `Services` - sets up networking in a Kubernetes Cluster
     - `ClusterIP` - exposes a set of pods to _other objects in the cluster_ (can't be used to access pods from the outside world)
     - `NodePort` - expose a container to the outside world (only good for development processes!)
-    - `LoadBalancer`
-    - `Ingress`
+    - `LoadBalancer` - legacy way of getting network traffic into a cluster
+    - `Ingress` - exposes a set of outside services to the world
 - `Deployments` - used to run/manage a set of identical pods
 - `Secrets` - securely stores a piece of information in the cluster, such as a database password. Types are:
     - `generic` - key/value
