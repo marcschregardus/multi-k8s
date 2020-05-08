@@ -1,12 +1,13 @@
 stages:
-- name: test
+- name: Test Client
   steps:
   - publishImageConfig:
-      dockerfilePath: ./client/Dockerfile.dev
-      buildContext: .
-      tag: mschregardus/react-test
+      dockerfilePath: ./Dockerfile.dev
+      buildContext: ./client
+      tag: react-test:${CICD_EXECUTION_SEQUENCE}
   - runScriptConfig:
       image: mschregardus/react-test
-      shellScript: docker run mschregardus/react-test npm run test -- --coverage
+      shellScript: |-
+        docker run react-test:${CICD_EXECUTION_SEQUENCE} npm run test -- --coverage
 timeout: 60
 notification: {}
