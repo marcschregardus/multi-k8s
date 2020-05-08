@@ -2,12 +2,17 @@ stages:
 - name: Test Client
   steps:
   - publishImageConfig:
-      dockerfilePath: ./Dockerfile.dev
-      buildContext: ./client
+      dockerfilePath: Dockerfile.dev
+      buildContext: ./client/
       tag: react-test:${CICD_EXECUTION_SEQUENCE}
+      registry: 127.0.0.1:34624
+    when:
+      branch:
+        include:
+        - master
   - runScriptConfig:
-      image: mschregardus/react-test
-      shellScript: |-
-        docker run react-test:${CICD_EXECUTION_SEQUENCE} npm run test -- --coverage
+      image: react-test:${CICD_EXECUTION_SEQUENCE}
+      shellScript: docker run react-test:${CICD_EXECUTION_SEQUENCE} npm run test --
+        --coverage
 timeout: 60
 notification: {}
