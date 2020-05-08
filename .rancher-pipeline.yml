@@ -1,0 +1,12 @@
+stages:
+- name: test
+  steps:
+  - publishImageConfig:
+      dockerfilePath: ./client/Dockerfile.dev
+      buildContext: .
+      tag: mschregardus/react-test
+  - runScriptConfig:
+      image: mschregardus/react-test
+      shellScript: docker run mschregardus/react-test npm run test -- --coverage
+timeout: 60
+notification: {}
